@@ -72,47 +72,48 @@ Matrix LinearRegression(Matrix X, Matrix Y)
     else
         return mulMat.inverse() * X * Y;
 }
-// Get random data from the given input
-vector<pair<double,double>> getRandomdata(vector<pair<double,double>> data) {
-    random_device rd;
-    mt19937 g1(rd());
-    vector<pair<double,double>> random_data;
-    // Get the Random Data
-    while (random_data.size() < data.size()) {
-        int idx1 =(int) g1() % (data.size() - 1);
-        int idx2 =(int) g1() % (data.size() - 1);
-        random_data.push_back({data[idx1].first, data[idx2].second});
-    }
-    return random_data;
-}
+
 // Randomly generate data
-vector<pair<double,double>> generatorRandom(const double lowerBound, const double  upperBound, int n) {
+vector<vector<double>> generatorRandom(const double lowerBound, const double upperBound, int n, int num_var)
+{
     random_device rd;
     mt19937 gen(rd());
     uniform_real_distribution<> distrib(lowerBound, upperBound);
 
     cout << fixed << setprecision(6);
 
-    vector<pair<double,double>> random_data;
-    while (random_data.size() <  n) {
-        double x = distrib(gen),y = distrib(gen);
-        random_data.push_back({x,y});
+    vector<vector<double>> random_data;
+    while (random_data.size() < n)
+    {
+        vector<double> test;
+        for (int i = 0; i < num_var; ++i)
+            test.push_back(distrib(gen));
+        random_data.push_back(test);
     }
     return random_data;
 }
 // Using the data from the file
-vector<pair<double,double>> useFile(string name) {
+vector<vector<double>> useFile(string name, int num_var)
+{
     ifstream input(name);
-    if (!input.is_open()) return {};
+    if (!input.is_open())
+        return {};
 
-    vector<pair<double, double>> data;
+    vector<vector<double>> data;
     // Get  the ordered input
-    while (!input.eof()) {
-        double x, y;
-        input >> x >> y;
-        data.push_back({x,y});
+    while (true)
+    {
+        vector<double> test;
+        for (int i = 1; i <= num_var; ++i)
+        {
+            double val;
+            input >> val;
+            test.push_back(val);
+        }
+        if (input.eof())
+            break;
+        data.push_back(test);
     }
-
     input.close();
     return data;
 }
@@ -120,50 +121,69 @@ vector<pair<double,double>> useFile(string name) {
 int main()
 {
 
-    vector<pair<double,double>> data;
+    vector<vector<double>> data;
 
     cout << "- Using Mode:\n1. File\n2. RandomGenerator\n";
-    
-    int choice; cin >> choice;
-    if (choice ==  1) {
+
+    int choice;
+    cin >> choice;
+    cout << "Number variable: ";
+    int num_var;
+    cin >> num_var;
+    num_var++;
+    if (choice == 1)
+    {
         cout << "- Input the File name: ";
-        string name; cin >> name;
-        data =  useFile(name);
+        string name;
+        cin >> name;
+        data = useFile(name, num_var);
     }
-    else if (choice == 2) {
-        double lower,upper;
+    else if (choice == 2)
+    {
+        double lower, upper;
         int size;
         cout << "- Generate Data Randomly\n* Choose lower Bound: ";
         cin >> lower;
-        cout <<  "\n* Choose upper Bound: ";
+        cout << "\n* Choose upper Bound: ";
         cin >> upper;
-        cout <<  "\n* Choose size: ";
+        cout << "\n* Choose size: ";
         cin >> size;
-        if (size <= 0) { cout << "Invalid Size\n Exit\n"; return 0;}
-        data =  generatorRandom(lower, upper, size);
+        if (size <= 0)
+        {
+            cout << "Invalid Size\n Exit\n";
+            return 0;
+        }
+        data = generatorRandom(lower, upper, size, num_var);
     }
-    else {
+    else
+    {
         cout << "Exit the  Programm\n";
         return 0;
     }
 
     // fill the  Matrix
-    Matrix X(2, data.size());
+    Matrix X(num_var, data.size());
     Matrix Y(data.size(), 1);
-    for (int i =  0; i < data.size(); ++i) {
-        X[0][i] = data[i].first;
-        X[1][i] = 1;
-        
-        Y[i][0] = data[i].second;
+    for (int c = 0; c < X.column(); ++c)
+    {
+        for (int r = 0; r < X.row() - 1; ++r)
+            X[r][c] = data[c][r];
+
+        X[X.row() - 1][c] = 1;
+        Y[c][0] = data[c].back();
     }
     // Output radom data testing
     ofstream output("output.csv");
-    for (pair<double, double> d:data)
-        output << d.first << "," << d.second <<  endl;
+    for (vector<double> list : data)
+    {
+        for (double val : list)
+            output << val << ",";
+        output << endl;
+    }
     // Result
-    Matrix W = LinearRegression(X,Y);
-    cout << W <<  endl;
+    Matrix W = LinearRegression(X, Y);
     output << endl << W << endl;
+    cout << W << endl;
 
     output.close();
     return 0;
