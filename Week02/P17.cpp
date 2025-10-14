@@ -1,0 +1,38 @@
+#include <stdio.h>
+#define NUMBER_MONEY_TYPE 9
+/* Notice: the output of the program will produce some spcripts beside the requirement result so the output to the console will look like this
+    + Paremeter: 24.00
+    + Area: 24.00
+*/
+// But in the output we will only display the requirement result
+
+// STUDENT ID: 24120409
+// FULL NAME: LE THANH PHONG
+// 25CTT1
+
+// Test case 1
+// Input:
+// Output:
+// Test case 2
+// Input:
+// Output:
+// Test case 3
+// Input:
+// Output:
+
+int main()
+{
+    unsigned long n;
+    int money[NUMBER_MONEY_TYPE] = {500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000};
+
+    printf("Input Amount of Money: %lu", &n);
+    int i = 0;
+    while (i < NUMBER_MONEY_TYPE)
+    {
+        int number = n / money[i];
+        n -= number * money[i];
+
+        printf("\t%lu : %d\n", money[i], number);
+        ++i;
+    }
+}
