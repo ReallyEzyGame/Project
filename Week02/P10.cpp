@@ -7,7 +7,7 @@
 
 // STUDENT ID: 24120409
 // FULL NAME: LE THANH PHONG
-// 25CTT1
+// CLASS: 25CTT1B
 
 // Test case 1
 // Input: 1000 1211
