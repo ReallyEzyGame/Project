@@ -7,17 +7,19 @@
 
 // STUDENT ID: 24120409
 // FULL NAME: LE THANH PHONG
-// 25CTT1
+// CLASS: 25CTT1B
 
 // Test case 1
-// Input:
-// Output:
+// Input: 10000
+// Output: 0
+
 // Test case 2
-// Input:
-// Output:
+// Input: 99999
+// Output: 5
+
 // Test case 3
-// Input:
-// Output:
+// Input: 12345
+// Output: 5
 
 int countPlate(int plate)
 {
@@ -28,7 +30,7 @@ int countPlate(int plate)
         plate /= 10;
     }
 
-    return plate;
+    return cnt;
 }
 int main()
 {
@@ -36,5 +38,5 @@ int main()
     printf("Input Plate Number: ");
     scanf("%d", &plate);
 
-    printf("%d", countPlate(plate));
+    printf("%d", countPlate(plate) % 10);
 }

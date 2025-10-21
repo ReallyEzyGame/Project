@@ -11,17 +11,19 @@
 
 // STUDENT ID: 24120409
 // FULL NAME: LE THANH PHONG
-// 25CTT1
+// 25CTT1B
 
 // Test case 1
-// Input:
-// Output:
+// Input: 3 2
+// Output: 17.97
+
 // Test case 2
-// Input:
-// Output:
+// Input: 0192301474374 981374397
+// Output: 48039757613572632346624.00
+
 // Test case 3
-// Input:
-// Output:
+// Input: 5 19
+// Output: 1133.54
 
 // Using Binary Search to find the correct value
 float sqrt(float val)

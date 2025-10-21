@@ -8,17 +8,19 @@
 
 // STUDENT ID: 24120409
 // FULL NAME: LE THANH PHONG
-// 25CTT1
+// 25CTT1B
 
 // Test case 1
-// Input:
-// Output:
+// Input: 40 100000
+// Output: 250000.00
+
 // Test case 2
-// Input:
-// Output:
+// Input: 38.32 194723948
+// Output: 508152288.00
+
 // Test case 3
-// Input:
-// Output:
+// Input: 0 500000
+// Output: There is no discount
 
 int main()
 {
@@ -27,5 +29,10 @@ int main()
     printf("Input the percent & maximum amount of the cashback event: ");
     scanf("%f %f", &quota, &max_cashback);
 
-    printf("the amount of money that the customer has to spend to get the maximun cashback is: %.f2\n", max_cashback * 1.0f / quota);
+    if (quota <= 0)
+    {
+        printf("There is no discount\n");
+        return 0;
+    }
+    printf("the amount of money that the customer has to spend to get the maximun cashback is: %.2f\n", max_cashback * 1.0f / (quota / 100));
 }

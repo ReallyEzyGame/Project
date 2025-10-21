@@ -11,16 +11,16 @@
 // 25CTT1
 
 // Test case 1
-// Input:
-// Output:
+// Input: 42.195 1 59 40.2
+// Output: 2.84 21.16
 
 // Test case 2
-// Input:
-// Output:
+// Input: 2974329432634 1223 1324 12434.242142
+// Output: 0.00 2382283008.00
 
 // Test case 3
-// Input:
-// Output:
+// Input: 122 1 1 12.12
+// Output: 0.50 119.60
 
 int main()
 {

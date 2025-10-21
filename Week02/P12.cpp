@@ -9,25 +9,37 @@
 
 // STUDENT ID: 24120409
 // FULL NAME: LE THANH PHONG
-// 25CTT1
+// CLASS: 25CTT1B
 
-// Test case 1
-// Input:
-// Output:
+/* Test case 1
+Input:
+        5
+        2000
+Output:  11000.00
+*/
+/*
 // Test case 2
-// Input:
-// Output:
+// Input:   94729
+            2198482347
+// Output: 2290873295840477184.00
+*/
+/*
 // Test case 3
-// Input:
-// Output:
+// Input:   0
+            10000
+// Output: 0.00
+*/
 
 int main()
 {
     int quantity;
     float price;
 
-    printf("Input Quantity: %d", &quantity);
-    printf("Input Price: %f", price);
+    printf("Input Quantity: ");
+    scanf("%d", &quantity);
+
+    printf("Input Price: ");
+    scanf("%f", &price);
 
     if (quantity < 0 || price < 0)
     {
