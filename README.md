@@ -1,2 +1,3 @@
 # Project
 the main branch is where the Unfisnish project stay on for later fixed
+some of my current projects include: OOP projects, introduction to Programming project, etc...  
