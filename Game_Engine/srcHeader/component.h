@@ -44,9 +44,13 @@ protected:
 public:
     Component(Entity *o) : owner(o) {}
     virtual ~Component() = default;
+    
     virtual size_t getID() const = 0;
     virtual std::string getName() const = 0;
 };
+
+
+
 class TransformComponent : public Component
 {
 public:

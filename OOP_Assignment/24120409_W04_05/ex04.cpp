@@ -4,71 +4,6 @@
 #include <cstring>
 
 
-template <typename T>
-class Node
-{
-private:
-    Node *next;
-    T data;
-
-public:
-    Node();
-    Node(const T);
-    // We only copy the data value of other Node and will not copy the next Node to avoid 2 Node pointing to 1 Node
-    Node(const Node *&);
-    ~Node() = default;
-
-    void SetData(const T);
-    void SetNextNode(Node<T> *);
-
-    T &GetData();
-    Node<T> *GetNextNode();
-};
-
-
-template <typename T>
-Node<T>::Node()
-{
-    data = T();
-    next = nullptr;
-}
-template <typename T>
-Node<T>::Node(const T val)
-{
-    data = val;
-    next = nullptr;
-}
-template <typename T>
-Node<T>::Node(const Node *&other)
-{
-    data = other->data;
-    next = nullptr;
-}
-
-template <typename T>
-T &Node<T>::GetData()
-{
-    return data;
-}
-template <typename T>
-Node<T> *Node<T>::GetNextNode()
-{
-    return next;
-}
-
-template <typename T>
-void Node<T>::SetData(const T val)
-{
-    data = val;
-}
-template <typename T>
-void Node<T>::SetNextNode(Node<T> *other)
-{
-    next = other;
-}
-
-
-
 
 
 class CString
@@ -85,10 +20,12 @@ public:
     CString &operator++();
     CString operator++(int);
 
-    char &operator[](const int &);
+    char &operator[](const int);
+    char operator[](const int) const;
     CString &operator=(const CString &);
     friend std::ostream &operator<<(std::ostream &, const CString &);
 };
+
 
 CString::CString()
 {
@@ -126,7 +63,16 @@ CString CString::operator++(int)
     }
     return tmp;
 }
-char &CString::operator[](const int &i)
+char CString::operator[](const int i) const
+{
+    int len = strlen(_mang);
+    if (i < 0 || i >= len)
+    {
+        throw std::exception("Out of Range");
+    }
+    return _mang[i];
+}
+char &CString::operator[](const int i)
 {
     int len = strlen(_mang);
     if (i < 0 || i >= len)
@@ -156,6 +102,71 @@ std::ostream &operator<<(std::ostream &os, const CString &cs)
 
 
 template <typename T>
+class Node
+{
+private:
+  Node *next;
+  T data;
+
+public:
+  Node();
+  Node(const T);
+  // We only copy the data value of other Node and will not copy the next Node to avoid 2 Node pointing to 1 Node
+  Node(const Node *&);
+  ~Node() = default;
+
+  void SetData(const T);
+  void SetNextNode(Node<T> *);
+
+  T &GetData();
+  Node<T> *GetNextNode();
+};
+
+template <typename T>
+Node<T>::Node()
+{
+  data = T();
+  next = nullptr;
+}
+template <typename T>
+Node<T>::Node(const T val)
+{
+  data = val;
+  next = nullptr;
+}
+template <typename T>
+Node<T>::Node(const Node *&other)
+{
+  data = other->data;
+  next = nullptr;
+}
+
+template <typename T>
+T &Node<T>::GetData()
+{
+  return data;
+}
+template <typename T>
+Node<T> *Node<T>::GetNextNode()
+{
+  return next;
+}
+
+template <typename T>
+void Node<T>::SetData(const T val)
+{
+  data = val;
+}
+template <typename T>
+void Node<T>::SetNextNode(Node<T> *other)
+{
+  next = other;
+}
+
+
+
+
+template <typename T>
 class LinkedList
 {
 private:
@@ -177,6 +188,7 @@ public:
   int getSize() const;
 
   T &operator[](const int);
+  T operator[](const int) const;
   LinkedList<T>& operator=(LinkedList<T>);
 };
 
@@ -344,11 +356,7 @@ LinkedList<T>& LinkedList<T>::operator=(LinkedList<T> other) {
 template <typename T>
 T &LinkedList<T>::operator[](const int idx)
 {
-  if (idx < 0)
-  {
-    throw std::exception("Out of List Range");
-  }
-  if (idx >= size)
+  if (idx < 0 || size <= idx)
   {
     throw std::exception("Out of List Range");
   }
@@ -367,6 +375,30 @@ T &LinkedList<T>::operator[](const int idx)
 
   return tmp->GetData();
 }
+template <typename T>
+T LinkedList<T>::operator[](const int idx) const
+{
+  if (idx < 0 || size <= idx)
+  {
+    throw std::exception("Out of List Range");
+  }
+
+  Node<T> *tmp = head;
+  int i = 0;
+  while (tmp)
+  {
+    if (idx == i)
+    {
+      break;
+    }
+    tmp = tmp->GetNextNode();
+    i++;
+  }
+  
+  return tmp->GetData();
+}
+
+
 
 template <typename T>
 std::ostream &operator<<(std::ostream &os, LinkedList<T> &ll)

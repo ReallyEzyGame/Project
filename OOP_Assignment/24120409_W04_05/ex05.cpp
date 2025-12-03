@@ -65,6 +65,8 @@ void Node<T>::SetNextNode(Node<T> *other)
   next = other;
 }
 
+
+
 template <typename T>
 class LinkedList
 {
@@ -87,6 +89,7 @@ public:
   int getSize() const;
 
   T &operator[](const int);
+  T operator[](const int) const;
   LinkedList<T>& operator=(LinkedList<T>);
 };
 
@@ -254,11 +257,7 @@ LinkedList<T>& LinkedList<T>::operator=(LinkedList<T> other) {
 template <typename T>
 T &LinkedList<T>::operator[](const int idx)
 {
-  if (idx < 0)
-  {
-    throw std::exception("Out of List Range");
-  }
-  if (idx >= size)
+  if (idx < 0 || size <= idx)
   {
     throw std::exception("Out of List Range");
   }
@@ -277,7 +276,28 @@ T &LinkedList<T>::operator[](const int idx)
 
   return tmp->GetData();
 }
+template <typename T>
+T LinkedList<T>::operator[](const int idx) const
+{
+  if (idx < 0 || size <= idx)
+  {
+    throw std::exception("Out of List Range");
+  }
 
+  Node<T> *tmp = head;
+  int i = 0;
+  while (tmp)
+  {
+    if (idx == i)
+    {
+      break;
+    }
+    tmp = tmp->GetNextNode();
+    i++;
+  }
+  
+  return tmp->GetData();
+}
 
 
 // the Number will be saved in the order as same as the order in mathematic notation
@@ -292,7 +312,7 @@ public:
   SoNguyenLon(int);
   // construct a big number with x  n times
   SoNguyenLon(const int, const int);
-  SoNguyenLon(SoNguyenLon &);
+  SoNguyenLon(const SoNguyenLon &);
   ~SoNguyenLon() = default;
 
 
@@ -300,6 +320,7 @@ public:
 
 
   char &operator[](const int);
+  char operator[](const int) const;
   SoNguyenLon& operator=(SoNguyenLon);
   SoNguyenLon operator+(SoNguyenLon );
   SoNguyenLon operator+(int);
@@ -312,14 +333,15 @@ public:
 SoNguyenLon::SoNguyenLon() : dayso() {}
 SoNguyenLon::SoNguyenLon(int val)
 {
-  int len = floor(log10(val)) + 1;
-  int i = 1;
-  while (i <= len)
-  {
-    dayso.AddHead(val % 10 + '0');
-    
-    val /= 10;
-    i++;
+  if (val <= 0) {
+    dayso.AddHead('0');
+  }
+  else {
+    int len = floor(log10(val)) + 1;
+    for (int i = 1; i <= len; ++i) {
+      dayso.AddHead('0' + (val % 10));
+      val /=  10;
+    }
   }
 }
 SoNguyenLon::SoNguyenLon(const int x, const int n) : dayso(LinkedList<char>())
@@ -332,7 +354,7 @@ SoNguyenLon::SoNguyenLon(const int x, const int n) : dayso(LinkedList<char>())
     }
   }
 }
-SoNguyenLon::SoNguyenLon(SoNguyenLon& number)
+SoNguyenLon::SoNguyenLon(const SoNguyenLon& number)
 {
   int N = number.DoDai();
   for (int i = 0; i < N; ++i)
@@ -349,6 +371,15 @@ int SoNguyenLon::DoDai() const
 
 
 char &SoNguyenLon::operator[](const int idx)
+{
+  if (idx < 0 || idx >= dayso.getSize())
+  {
+    throw(10);
+  }
+
+  return dayso[idx];
+}
+char SoNguyenLon::operator[](const int idx) const
 {
   if (idx < 0 || idx >= dayso.getSize())
   {
@@ -392,7 +423,6 @@ SoNguyenLon SoNguyenLon::operator+(SoNguyenLon sk)
     kq.dayso.AddHead('1');
   return kq;
 }
-std::ostream &operator<<(std::ostream &os, SoNguyenLon &snl);
 
 
 SoNguyenLon SoNguyenLon::operator+(const int so)
@@ -473,7 +503,7 @@ SoNguyenLon SoNguyenLon::operator*(SoNguyenLon sk)
 }
 SoNguyenLon operator+(int so, SoNguyenLon &snl)
 {
-  SoNguyenLon sokhac;
+  SoNguyenLon sokhac(so);
   return sokhac + snl;
 }
 SoNguyenLon operator-(int so, SoNguyenLon &snl)
@@ -486,6 +516,8 @@ SoNguyenLon operator*(int so, SoNguyenLon &snl)
   SoNguyenLon sk(so);
   return sk * snl;
 }
+
+
 std::ostream &operator<<(std::ostream &os, SoNguyenLon &snl)
 {
   int N = snl.DoDai();
@@ -502,6 +534,8 @@ std::ostream &operator<<(std::ostream &os, SoNguyenLon &snl)
   }
   return os;
 }
+
+
 
 int main()
 {
@@ -522,4 +556,7 @@ int main()
             << snl6 << std::endl;
   std::cout << snl7 << std::endl
             << snl8 << std::endl;
+
+  system("pause");
+  return 0;
 }
