@@ -1,0 +1,13 @@
+/*
+  Giả sử chúng ta đang viết chương trình mô phỏng hệ thống lưu trữ của máy tính. Hệ thống lưu
+trữ FS trên máy tính được tổ chức thành các đĩa (Disk). Mỗi đĩa có thể sẽ chứa các Folder, File,
+và Shortcut. Folder có thể chứa các File, các Shortcut và các Folder con. Thuộc tính chính của
+Disk, Folder, File, và Shortcut là tên. Ngoài ra, Disk còn có thông tin về dung lượng; File có
+thông tin về kích thước, loại tệp (binary hoặc text); Shortcut có thông tin về phần tử nguồn (là
+Folder hoặc File mà shortcut trỏ đến).
+a. Hãy xây dựng thiết kế lớp gồm FS, Disk, Folder, File, Shortcut và các lớp, giao diện cần thiết
+khác.
+b. Cài đặt phương thức getFreeSpace() để tìm dung lượng chưa sử dụng của một đĩa. Giả sử kích
+thước của một shortcut là 1KB. Kích thước của một folder bằng tổng kích thước các tệp,shortcut,
+và folder chứa trong folder đó.
+*/

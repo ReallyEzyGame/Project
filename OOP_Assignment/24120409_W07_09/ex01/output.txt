@@ -1,0 +1,8 @@
+nvkt: 100001 Tran Van A (Tp Ho Chi Minh) [Dien] <10>
+nvkt: 100019 Le Van C (Tp Ha Noi) [IT] <4>
+nvkt: 100020 Pham Van D (Tp Hai Phong) [Dien] <5>
+nvkt: 100022 Ngo Van F (Tp Ho Chi Minh) [XayDung] <6>
+nvkt: 100000 Le Thanh Phong (Tay Ninh) [IT] <10>
+nvtk: 100010 Nguyen Thi B (Tp Ho Chi Minh) [Anh] <11>
+nvtk: 100021 Tran Thi E (Long An) [Phap] <19>
+nvtk: 100023 Phan Thi G (Can Tho) [Phap] <13>
