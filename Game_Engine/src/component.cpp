@@ -12,7 +12,7 @@ PhysicComponent::PhysicComponent(Entity *o) : Component(o)
 {
     velocity = {0.f, 0.f};
     mass = 0.f;
-
+    
     gravity = _GRAVITY_;
     friction = _FRICTION_;
 
