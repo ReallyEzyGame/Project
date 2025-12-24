@@ -56,7 +56,7 @@ int main() {
     dChild->AddChild(new File("File 1", 123));
     dChild->AddChild(new File("File 2", 444));
     dRoot->AddChild(dChild);
-    dRoot->AddChild(new File("File 3", 789));
+    dRoot->AddChild(new File("File 3", 7899));
 
     dRoot->Print(cout);
 
